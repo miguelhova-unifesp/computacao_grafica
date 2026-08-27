@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>desenhos webgl</title>
+<style>
+  body { background: #222; color: white; font-family: sans-serif; text-align: center; }
+  canvas { background: #111; border: 2px solid #555; margin: 10px; }
+</style>
+</head>
+<body>
+
+<h1>Desenhos</h1>
+
+<h2>flor</h2>
+<canvas id="canvasFlor" width="300" height="300"></canvas>
+
+<h2>robo</h2>
+<canvas id="canvasRobo" width="300" height="300"></canvas>
+
+<h2>carro</h2>
+<canvas id="canvasCarro" width="300" height="300"></canvas>
+
+
+<script>
+//flor
+
+var canvas1 = document.getElementById("canvasFlor");
+var gl1 = canvas1.getContext("webgl");
+
+var vertexCode1 = `
+  attribute vec2 pos;
+  void main() {
+    gl_Position = vec4(pos, 0.0, 1.0);
+  }
+`;
+
+var fragCode1 = `
+  precision mediump float;
+  uniform vec4 cor;
+  void main() {
+    gl_FragColor = cor;
+  }
+`;
+
+var vs1 = gl1.createShader(gl1.VERTEX_SHADER);
+gl1.shaderSource(vs1, vertexCode1);
+gl1.compileShader(vs1);
+
+var fs1 = gl1.createShader(gl1.FRAGMENT_SHADER);
+gl1.shaderSource(fs1, fragCode1);
+gl1.compileShader(fs1);
+
+var prog1 = gl1.createProgram();
+gl1.attachShader(prog1, vs1);
+gl1.attachShader(prog1, fs1);
+gl1.linkProgram(prog1);
+gl1.useProgram(prog1);
+
+var posLoc1 = gl1.getAttribLocation(prog1, "pos");
+gl1.enableVertexAttribArray(posLoc1);
+
+var corLoc1 = gl1.getUniformLocation(prog1, "cor");
+
+gl1.clearColor(0.05, 0.05, 0.05, 1);
+gl1.clear(gl1.COLOR_BUFFER_BIT);
+
+//caule
+var caule = new Float32Array([
+  -0.05, -0.9,
+   0.05, -0.9,
+  -0.05,  0.1,
+
+   0.05, -0.9,
+   0.05,  0.1,
+  -0.05,  0.1
+]);
+var bufCaule = gl1.createBuffer();
+gl1.bindBuffer(gl1.ARRAY_BUFFER, bufCaule);
+gl1.bufferData(gl1.ARRAY_BUFFER, caule, gl1.STATIC_DRAW);
+gl1.vertexAttribPointer(posLoc1, 2, gl1.FLOAT, false, 0, 0);
+gl1.uniform4f(corLoc1, 0.2, 0.7, 0.2, 1.0); // verde
+gl1.drawArrays(gl1.TRIANGLES, 0, 6);
+
+//petalas
+var petalas = new Float32Array([
+  0.0, 0.15,   0.0, 0.55,   0.25, 0.35,
+  0.0, 0.15,   0.0, 0.55,  -0.25, 0.35,
+  0.0, 0.15,   0.28, 0.1,   0.15, 0.5,
+  0.0, 0.15,  -0.28, 0.1,  -0.15, 0.5,
+  0.0, 0.15,   0.3, 0.25,  -0.05, 0.55,
+  0.0, 0.15,  -0.3, 0.25,   0.05, 0.55
+]);
+var bufPet = gl1.createBuffer();
+gl1.bindBuffer(gl1.ARRAY_BUFFER, bufPet);
+gl1.bufferData(gl1.ARRAY_BUFFER, petalas, gl1.STATIC_DRAW);
+gl1.vertexAttribPointer(posLoc1, 2, gl1.FLOAT, false, 0, 0);
+gl1.uniform4f(corLoc1, 1.0, 0.3, 0.6, 1.0); // rosa
+gl1.drawArrays(gl1.TRIANGLES, 0, 18);
+
+// miolo
+var miolo = new Float32Array([
+   0.0, 0.25,   0.08, 0.15,   0.0, 0.05,
+   0.0, 0.25,  -0.08, 0.15,   0.0, 0.05
+]);
+var bufMiolo = gl1.createBuffer();
+gl1.bindBuffer(gl1.ARRAY_BUFFER, bufMiolo);
+gl1.bufferData(gl1.ARRAY_BUFFER, miolo, gl1.STATIC_DRAW);
+gl1.vertexAttribPointer(posLoc1, 2, gl1.FLOAT, false, 0, 0);
+gl1.uniform4f(corLoc1, 1.0, 0.85, 0.0, 1.0); // amarelo
+gl1.drawArrays(gl1.TRIANGLES, 0, 6);
+
+// folha 
+var folha = new Float32Array([
+  0.05, -0.3,
+  0.35, -0.15,
+  0.05, -0.05
+]);
+var bufFolha = gl1.createBuffer();
+gl1.bindBuffer(gl1.ARRAY_BUFFER, bufFolha);
+gl1.bufferData(gl1.ARRAY_BUFFER, folha, gl1.STATIC_DRAW);
+gl1.vertexAttribPointer(posLoc1, 2, gl1.FLOAT, false, 0, 0);
+gl1.uniform4f(corLoc1, 0.1, 0.6, 0.1, 1.0);
+gl1.drawArrays(gl1.TRIANGLES, 0, 3);
+
+
+// ROBO
+
+var canvas2 = document.getElementById("canvasRobo");
+var gl2 = canvas2.getContext("webgl");
+
+// Mesmo shaders
+var vs2 = gl2.createShader(gl2.VERTEX_SHADER);
+gl2.shaderSource(vs2, vertexCode1);
+gl2.compileShader(vs2);
+
+var fs2 = gl2.createShader(gl2.FRAGMENT_SHADER);
+gl2.shaderSource(fs2, fragCode1);
+gl2.compileShader(fs2);
+
+var prog2 = gl2.createProgram();
+gl2.attachShader(prog2, vs2);
+gl2.attachShader(prog2, fs2);
+gl2.linkProgram(prog2);
+gl2.useProgram(prog2);
+
+var posLoc2 = gl2.getAttribLocation(prog2, "pos");
+gl2.enableVertexAttribArray(posLoc2);
+var corLoc2 = gl2.getUniformLocation(prog2, "cor");
+
+gl2.clearColor(0.05, 0.05, 0.05, 1);
+gl2.clear(gl2.COLOR_BUFFER_BIT);
+
+
+function desenhaCoisa(gl, posLoc, verts, r, g, b) {
+  var buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(verts), gl.STATIC_DRAW);
+  gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+  gl.uniform4f(corLoc2, r, g, b, 1.0);
+  gl.drawArrays(gl.TRIANGLES, 0, verts.length / 2);
+}
+
+// cabeca
+desenhaCoisa(gl2, posLoc2, [
+  -0.3, 0.5,  0.35, 0.55,  -0.28, 0.85,
+  0.35, 0.55,  0.32, 0.88,  -0.28, 0.85
+], 0.6, 0.6, 0.65);
+
+// olho esquerdo
+desenhaCoisa(gl2, posLoc2, [
+  -0.15, 0.65, -0.05, 0.65, -0.1, 0.72
+], 0.9, 0.1, 0.1);
+
+// olho direito
+desenhaCoisa(gl2, posLoc2, [
+  0.1, 0.65, 0.2, 0.65, 0.15, 0.72
+], 0.9, 0.1, 0.1);
+
+// corpo
+desenhaCoisa(gl2, posLoc2, [
+  -0.35, -0.2,  0.35, -0.15,  -0.3, 0.45,
+  0.35, -0.15,  0.4, 0.4,  -0.3, 0.45
+], 0.3, 0.3, 0.9);
+
+// braco esquerdo
+desenhaCoisa(gl2, posLoc2, [
+  -0.35, 0.0,  -0.6, -0.1,  -0.35, 0.3
+], 0.5, 0.5, 0.55);
+
+// braco direito
+desenhaCoisa(gl2, posLoc2, [
+  0.35, 0.0,  0.6, -0.15,  0.4, 0.3
+], 0.5, 0.5, 0.55);
+
+// perna esquerda
+desenhaCoisa(gl2, posLoc2, [
+  -0.25, -0.9, -0.05, -0.9, -0.2, -0.2
+], 0.4, 0.4, 0.45);
+
+// perna direita
+desenhaCoisa(gl2, posLoc2, [
+  0.05, -0.9, 0.25, -0.9, 0.15, -0.15
+], 0.4, 0.4, 0.45);
+
+// antena
+desenhaCoisa(gl2, posLoc2, [
+  0.0, 0.85, 0.03, 0.85, 0.015, 0.98
+], 1.0, 0.8, 0.0);
+
+
+// Carro
+
+var canvas3 = document.getElementById("canvasCarro");
+var gl3 = canvas3.getContext("webgl");
+
+var vs3 = gl3.createShader(gl3.VERTEX_SHADER);
+gl3.shaderSource(vs3, vertexCode1);
+gl3.compileShader(vs3);
+
+var fs3 = gl3.createShader(gl3.FRAGMENT_SHADER);
+gl3.shaderSource(fs3, fragCode1);
+gl3.compileShader(fs3);
+
+var prog3 = gl3.createProgram();
+gl3.attachShader(prog3, vs3);
+gl3.attachShader(prog3, fs3);
+gl3.linkProgram(prog3);
+gl3.useProgram(prog3);
+
+var posLoc3 = gl3.getAttribLocation(prog3, "pos");
+gl3.enableVertexAttribArray(posLoc3);
+var corLoc3 = gl3.getUniformLocation(prog3, "cor");
+
+gl3.clearColor(0.05, 0.05, 0.05, 1);
+gl3.clear(gl3.COLOR_BUFFER_BIT);
+
+function desenhaCoisa3(verts, r, g, b) {
+  var buf = gl3.createBuffer();
+  gl3.bindBuffer(gl3.ARRAY_BUFFER, buf);
+  gl3.bufferData(gl3.ARRAY_BUFFER, new Float32Array(verts), gl3.STATIC_DRAW);
+  gl3.vertexAttribPointer(posLoc3, 2, gl3.FLOAT, false, 0, 0);
+  gl3.uniform4f(corLoc3, r, g, b, 1.0);
+  gl3.drawArrays(gl3.TRIANGLES, 0, verts.length / 2);
+}
+
+// base do carro 
+desenhaCoisa3([
+  -0.8, -0.3,  0.8, -0.25,  -0.8, 0.0,
+   0.8, -0.25,  0.8, 0.05,  -0.8, 0.0
+], 0.8, 0.1, 0.1);
+
+// cabine
+desenhaCoisa3([
+  -0.4, 0.0,   0.35, 0.02,  -0.35, 0.4,
+   0.35, 0.02,  0.3, 0.4,  -0.35, 0.4
+], 0.8, 0.15, 0.15);
+
+// janela 
+desenhaCoisa3([
+  -0.25, 0.05, 0.15, 0.05, -0.15, 0.35
+], 0.6, 0.8, 1.0);
+
+// roda esquerda 
+desenhaCoisa3([
+  -0.55, -0.3, -0.4, -0.3, -0.47, -0.15,
+  -0.4, -0.3, -0.32, -0.2, -0.47, -0.15,
+  -0.32, -0.2, -0.32, -0.4, -0.47, -0.15,
+  -0.32, -0.4, -0.4, -0.45, -0.47, -0.15,
+  -0.4, -0.45, -0.55, -0.45, -0.47, -0.15,
+  -0.55, -0.45, -0.62, -0.4, -0.47, -0.15,
+  -0.62, -0.4, -0.62, -0.2, -0.47, -0.15,
+  -0.62, -0.2, -0.55, -0.3, -0.47, -0.15
+], 0.1, 0.1, 0.1);
+
+// roda direita 
+desenhaCoisa3([
+  0.25, -0.3, 0.4, -0.3, 0.33, -0.15,
+  0.4, -0.3, 0.48, -0.2, 0.33, -0.15,
+  0.48, -0.2, 0.48, -0.4, 0.33, -0.15,
+  0.48, -0.4, 0.4, -0.45, 0.33, -0.15,
+  0.4, -0.45, 0.25, -0.45, 0.33, -0.15,
+  0.25, -0.45, 0.18, -0.4, 0.33, -0.15,
+  0.18, -0.4, 0.18, -0.2, 0.33, -0.15,
+  0.18, -0.2, 0.25, -0.3, 0.33, -0.15
+], 0.1, 0.1, 0.1);
+
+// farol 
+desenhaCoisa3([
+  0.75, -0.1, 0.85, -0.08, 0.75, -0.02
+], 1.0, 1.0, 0.6);
+
+</script>
+
+</body>
+</html>
