@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>linha bresenham webgl</title>
+<style>
+  body { background: #222; color: white; font-family: sans-serif; text-align: center; }
+  canvas { background: #111; border: 2px solid #555; margin: 10px; cursor: crosshair; }
+  #info { font-family: monospace; color: #bbb; }
+  ul { display: inline-block; text-align: left; color: #ccc; }
+  .cor { display: inline-block; width: 12px; height: 12px; border: 1px solid #666;
+         vertical-align: middle; margin-right: 6px; }
+</style>
+</head>
+<body>
+
+<h1>Linha por Bresenham</h1>
+
+<p>1o clique (botao esquerdo) = ponto inicial, 2o clique = ponto final.<br>
+Teclas <b>0</b> a <b>9</b> mudam a cor da linha.</p>
+
+<canvas id="tela" width="600" height="600"></canvas>
+
+<p id="info"></p>
+
+<ul>
+  <li><span class="cor" style="background:#0000ff"></span>0 - azul (inicial)</li>
+  <li><span class="cor" style="background:#ff0000"></span>1 - vermelho</li>
+  <li><span class="cor" style="background:#00ff00"></span>2 - verde</li>
+  <li><span class="cor" style="background:#ffff00"></span>3 - amarelo</li>
+  <li><span class="cor" style="background:#00ffff"></span>4 - ciano</li>
+  <li><span class="cor" style="background:#ff00ff"></span>5 - magenta</li>
+  <li><span class="cor" style="background:#ff8000"></span>6 - laranja</li>
+  <li><span class="cor" style="background:#9933e6"></span>7 - roxo</li>
+  <li><span class="cor" style="background:#ffffff"></span>8 - branco</li>
+  <li><span class="cor" style="background:#808080"></span>9 - cinza</li>
+</ul>
+
+<script src="ex1.js"></script>
+
+</body>
+</html>
